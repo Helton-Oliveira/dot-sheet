@@ -14,14 +14,10 @@ class Controller {
     }
 
     getOneRegister = async (req, res, next) => {
-        const { name } = req.params;
-
-        const query = {
-            name: name
-        }
+        const { id } = req.params;
 
         try {
-            const sucess = await this.entityServices.getOne(query);
+            const sucess = await this.entityServices.getOne(id);
             res.status(200).json(sucess);
         } catch (error) {
             console.log(error);

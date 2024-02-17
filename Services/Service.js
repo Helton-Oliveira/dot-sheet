@@ -3,12 +3,12 @@ class Services {
         this.model = model
     }
     
-    getAll = async () => {
-        return this.model.find({})
+    getAll = async (where = {}) => {
+        return this.model.find(where);
     }
     
     getOne = async (query) => {
-        return this.model.find({ ...query });
+        return this.model.findOne({ _id: query});
     }
 
     created = async (data) => {

@@ -7,14 +7,6 @@ class EmployessController extends Controller {
     constructor() {
         super(employessServices)
     }
-
-    getAllRegisterEmploye = async(req, res, next) => {
-        const employeId = req.params;
-
-        const allRegisters = await employessServices.getAllRegisterPerEmploye(employeId);
-        
-        res.status(200).json(allRegisters);
-    }
 }
 
 export default EmployessController;

@@ -1,5 +1,5 @@
 import Day from "./Day.js";
-import Employess from "./employess.js";
+import { Employess } from "./employess.js";
 import  Admin  from "./adminstrators.js";
 import Register from "./Register.js";
 

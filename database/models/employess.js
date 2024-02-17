@@ -29,8 +29,8 @@ const EmployeSchema = new Schema({
         type: Boolean,
         require: [true, 'O campo active é obrigatório.']
     },
-})
+}, { versionKey: false })
 
 const Employess = mongoose.model('Employes', EmployeSchema);
 
-export default Employess;
+export  { Employess, EmployeSchema};
