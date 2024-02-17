@@ -1,3 +1,5 @@
+import NotFound from '../errors/NotFound.js'
+
 class Controller {
     constructor(entityServices) {
         this.entityServices = entityServices
@@ -5,11 +7,11 @@ class Controller {
     
     getAllRegister = async(req, res, next) => {
         try {
-            const all = await this.entityServices.getAll()
+            const all = await this.entityServices.getAll();
 
             res.status(200).json(all)
         } catch (error) {
-            console.error(error);
+            next(error);
         }
     }
 
@@ -18,9 +20,18 @@ class Controller {
 
         try {
             const sucess = await this.entityServices.getOne(id);
+
+            console.log(sucess)
+            
+        if(sucess !== null) {  
             res.status(200).json(sucess);
+
+        } else {
+            next( new NotFound() );
+        }
+
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -31,7 +42,7 @@ class Controller {
             const sucess = await this.entityServices.created(data);
             res.status(200).json(sucess);
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -43,10 +54,12 @@ class Controller {
 
             if(updated !== null) {
                 res.status(200).json({msg: 'Alterado com sucesso'});
+            } else {
+                next(new NotFound());
             }
             
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
@@ -58,6 +71,8 @@ class Controller {
 
             if(DeleData !== null) {
                 res.status(200).json({msg: 'Deletado com sucesso'});
+            } else {
+                next(new NotFound());
             }
             
         } catch (error) {

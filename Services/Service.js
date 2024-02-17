@@ -15,12 +15,12 @@ class Services {
         return this.model.create(data)
     }
 
-    Update = async(id, data) => {
-        return this.model.findOneAndUpdate(id, data);
+    update = async(id, data) => {
+        return this.model.findByIdAndUpdate(id, data);
     }
 
     deleting = async(where) => {
-        return this.model.findOneAndDelete(where);
+        return this.model.findOneAndDelete({ _id: where });
     }
 }
 
