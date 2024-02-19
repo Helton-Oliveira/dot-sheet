@@ -8,12 +8,19 @@ class RegisterServices extends Services {
     }
 
     listRecordsByFilter = async(query) => {
-        const filter = await processQuery(query, Employess);
+        const sucess = await processQuery(query);
 
-        const sucess = await Register.find({ ...filter });
-        
-        return sucess
-    }
+        if(sucess.employe !== undefined) {
+            const employeeFound = await Employess.findOne({ name: {$regex: sucess.employe, $options: 'i'} });
+            const registerFound = await Register.find({ ['employe._id']: employeeFound._id});
+            return (registerFound);
+
+        } else {    
+            const foundDate = await Register.find({date: sucess.date})
+            return foundDate
+
+        }
+        }
 };
 
 export default RegisterServices;
