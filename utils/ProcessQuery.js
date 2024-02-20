@@ -8,7 +8,7 @@ async function processQuery(query) {
     if(initialDate) search.date = {$gte: initialDate};
     if(finalDate) search.date= {$lte: finalDate};
 
-    if(employeeName) search.employe = employeeName;
+    if(employeeName) search.employe = {$regex: employeeName, $options: 'i'} ;
 
     return search;
 
