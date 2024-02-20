@@ -3,7 +3,10 @@ const { Schema } = mongoose;
 
 const EmployeSchema = new Schema({
 
-    id: { type: mongoose.Schema.Types.ObjectId },
+    id: { 
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'O campo id deve ser colocado' ]
+    } ,
     name: { 
         type: String,
         require: [true, 'O campo name deve ser obrigatório' ],

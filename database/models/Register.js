@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 import getRecordType from "../../utils/getRecordType.js";
 import { dataFormatter, hoursFormatter} from "../../utils/formatterFunctions.js";
@@ -19,17 +19,9 @@ const RegisterSchema = new Schema({
    },
 
    employe: {
-      type: EmployeSchema, 
-      validade: { 
-         validator: (value) => {
-            console.log(value)
-            return value !== ""
-         },
-         message: 'the field {VALUE} cannot be empty'
-      },
-      required: [true, 'message' ]
-   } 
-      
+      type: EmployeSchema,
+      required: true
+   }
      
 }, { versionKey: false })
 

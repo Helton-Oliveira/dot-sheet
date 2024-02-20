@@ -5,7 +5,7 @@ class BaseError extends Error {
         this.status = status;
     }
 
-    sendReply(res) {
+    sendReply = (res) => {
         res.status(this.status).send({
             message: this.message,
             status: this.status,

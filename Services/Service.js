@@ -8,7 +8,7 @@ class Services {
     }
     
     getOne = async (query) => {
-        return this.model.findOne({ _id: query});
+        return this.model.findById(query);
     }
 
     created = async (data) => {
