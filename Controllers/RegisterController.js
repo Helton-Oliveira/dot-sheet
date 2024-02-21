@@ -2,7 +2,6 @@ import Controller from './Controller.js'
 import RegisterServices from '../Services/RegisterServices.js'
 import EmployessServices from '../Services/EmployessServices.js';
 import NotFound from '../errors/NotFound.js';
-import mongoose from 'mongoose';
 
 const registerServices = new RegisterServices();
 const employeServices = new EmployessServices();
@@ -16,18 +15,14 @@ class RegisterController extends Controller {
         const data = req.body;      
         try {      
             const employe = await employeServices.getOne(data.employe);
+
             if( employe !== null) {
                 const fullRegister = { employe: {...employe}} ;
                 const createdRegister = await registerServices.created(fullRegister);
                 res.status(200).json(createdRegister); 
             } 
-
-            next(new NotFound('User not found, please enter a valid user'));
-
         } catch (error) {
-
-            console.log(error instanceof mongoose.Error.CastError)
-           next(error);
+            next(new NotFound('User not found, please enter a valid user').sendReply(res))
         }
     }
 
@@ -37,9 +32,10 @@ class RegisterController extends Controller {
 
             if(sucessQuery.length > 0) {
                 res.status(200).json(sucessQuery);
-            } 
+            } else {
+                next(new NotFound('Error, please enter a valid filter'))
+            }
 
-            next(new NotFound('Error, please enter a valid filter'))
 
         } catch (error) {
             console.log(error)
