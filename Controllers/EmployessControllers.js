@@ -1,6 +1,5 @@
 import Controller from './Controller.js'
 import EmployessServices from '../Services/EmployessServices.js';
-import toJson from '../utils/toJSON.js'
 
 const employessServices = new EmployessServices
 
