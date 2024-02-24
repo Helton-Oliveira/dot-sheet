@@ -19,6 +19,7 @@ class RegisterServices extends Services {
         const filter = await Register.find(sucess);
         return filter;
     }
+
 };
 
 export default RegisterServices;

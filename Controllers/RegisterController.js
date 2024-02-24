@@ -43,6 +43,22 @@ class RegisterController extends Controller {
         }
     }
 
+    recognitionRegister = async(req, res, next) => {
+        const data = req.body;
+        try {
+            const employe = await employeServices.searchEmployeByName(data);
+
+            if(employe !== null) {
+                const fullRegister = { employe: {...employe}} ;
+                const createdRegister = await registerServices.created(fullRegister);
+                res.status(200).json(createdRegister); 
+            }
+
+
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 export default RegisterController;

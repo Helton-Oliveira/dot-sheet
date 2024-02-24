@@ -8,6 +8,7 @@ router.get('/register', registerController.getAllRegister);
 router.get('/register/q', registerController.registerFilter);
 router.get('/register/:id', registerController.getOneRegister);
 router.post('/register', registerController.createRegistrationWithEmployee);
+router.post('/register/rec', registerController.recognitionRegister);
 router.put('/register/:id', registerController.toUpdated);
 router.delete('/register/:id', registerController.deleted);
 

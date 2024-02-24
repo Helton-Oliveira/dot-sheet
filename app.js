@@ -4,8 +4,6 @@ import routes from "./routes/index.js";
 import errorHandler from "./midllewares/errorHandler.js";
 import handler404 from "./midllewares/handler404.js";
 
-
-
 const connection = await dbConnection()
 
 connection.on("error", (error) => {

@@ -10,6 +10,10 @@ class EmployessServices extends Services {
     createFullEmployee = async(data) => {
         return Employess.create({...data})
     }
+
+    searchEmployeByName = async(data) => {
+        return Employess.findOne({ ...data})
+    }
 }
 
 
