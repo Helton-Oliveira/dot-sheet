@@ -19,6 +19,9 @@ const EmployeSchema = new Schema({
         type: String,
         require: [true, 'O campo email é obrigatório']
     },
+    imgSrc: {
+        type: String,
+    },
     tel: {
         type: String,
         require: [true, 'O campo tel é obrigatório']

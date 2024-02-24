@@ -6,6 +6,10 @@ class EmployessServices extends Services {
     constructor(){
         super(Employess);
     }
+
+    createFullEmployee = async(data) => {
+        return Employess.create({...data})
+    }
 }
 
 
