@@ -10,7 +10,7 @@ const employessController = new EmployessController;
 
 router.get('/employe', verifyToken, employessController.getAllRegister);
 router.get('/employe/:id', verifyToken, employessController.getOneRegister);
-router.post('/employe', upload.single('file'), employessController.completeEmployeeRegistration);
+router.post('/employe', verifyToken, upload.single('file'), employessController.completeEmployeeRegistration);
 router.put('/employe/:name', verifyToken, employessController.toUpdated);
 router.delete('/employe/:name', verifyToken, employessController.deleted);
 

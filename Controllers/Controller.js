@@ -1,5 +1,4 @@
 import NotFound from '../errors/NotFound.js'
-import bcrypt from 'bcrypt';
 
 class Controller {
     constructor(entityServices) {
