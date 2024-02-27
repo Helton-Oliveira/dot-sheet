@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/admin', adminContoller.getAllRegister);
 router.get('/admin/:name', adminContoller.getOneRegister);
-router.post('/admin', adminContoller.create);
+router.post('/admin', adminContoller.createFullAdmin);
 router.put('/admin/:name', adminContoller.toUpdated);
 router.delete('admin/:name', adminContoller.deleted);
 
