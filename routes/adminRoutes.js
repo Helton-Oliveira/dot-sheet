@@ -1,14 +1,17 @@
 import { Router } from "express";
 import AdminController from "../Controllers/AdminController.js";
+import { verifyToken } from "../midllewares/auth.js"; 
 
 const adminContoller = new AdminController;
 const router = Router()
 
-router.get('/admin', adminContoller.getAllRegister);
-router.get('/admin/:name', adminContoller.getOneRegister);
-router.post('/admin', adminContoller.createFullAdmin);
-router.put('/admin/:name', adminContoller.toUpdated);
-router.delete('admin/:name', adminContoller.deleted);
+
+router.get('/admin', verifyToken, adminContoller.getAllRegister);
+router.get('/admin/:id', verifyToken, adminContoller.getOneRegister);
+router.post('/auth/admin', adminContoller.authAdmin)
+router.post('/admin', verifyToken, adminContoller.createFullAdmin);
+router.put('/admin/:id', verifyToken, adminContoller.toUpdated);
+router.delete('/admin/:id', verifyToken, adminContoller.deleted);
 
 
 export default router; 

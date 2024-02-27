@@ -20,7 +20,7 @@ class Services {
     }
 
     deleting = async(where) => {
-        return this.model.findOneAndDelete({ _id: where });
+        return this.model.findByIdAndDelete(where);
     }
 }
 

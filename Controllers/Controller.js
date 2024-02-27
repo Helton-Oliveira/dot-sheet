@@ -1,4 +1,5 @@
 import NotFound from '../errors/NotFound.js'
+import bcrypt from 'bcrypt';
 
 class Controller {
     constructor(entityServices) {
@@ -20,8 +21,6 @@ class Controller {
 
         try {
             const sucess = await this.entityServices.getOne(id);
-
-            console.log(sucess)
             
         if(sucess !== null) {  
             res.status(200).json(sucess);
@@ -67,16 +66,16 @@ class Controller {
         const { id } = req.params
 
         try {
-            const DeleData = await this.entityServices.deleting(id);
+            const deleData = await this.entityServices.deleting(id);
 
-            if(DeleData !== null) {
+            if(deleData !== null) {
                 res.status(200).json({msg: 'Deletado com sucesso'});
             } else {
                 next(new NotFound());
             }
             
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 

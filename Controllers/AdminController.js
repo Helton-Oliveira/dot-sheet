@@ -19,6 +19,15 @@ class AdminController extends Controller {
             next(error)
         }
     }
+
+    authAdmin = async(req, res, next) => {
+        try {
+            const token = await adminServices.createTokenForAdmin(req.body);
+            res.status(200).json({token: token})
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 export default AdminController;
