@@ -8,7 +8,7 @@ import { verifyToken } from '../midllewares/auth.js';
 const router = Router();
 const employessController = new EmployessController;
 
-router.get('/employe', verifyToken, employessController.getAllRegister);
+router.get('/employe',  employessController.getAllRegister);
 router.get('/employe/:id', verifyToken, employessController.getOneRegister);
 router.post('/employe', verifyToken, upload.single('file'), employessController.completeEmployeeRegistration);
 router.put('/employe/:name', verifyToken, employessController.toUpdated);

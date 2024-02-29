@@ -59,10 +59,10 @@ async function compareFaces(cam) {
 
         const results = faceCam.map(d => faceMatcher.findBestMatch(d.descriptor))
 
-        results.forEach(async(file) => {
+        results.forEach(async(file) => { 
             const res = file.distance 
             console.log(res)
-            res > .3?  await createRegister(file.label) : console.log('erro')
+            res > .4?  await createRegister(file.label) : console.log('erro')
         })
 
     
@@ -72,13 +72,13 @@ async function compareFaces(cam) {
 function labeledTest (names) {
     const labels = names
     return Promise.all(
-        labels.map(async label => {
+        labels.map(async label => { 
             const descriptions = []
                 const img = await faceapi.fetchImage(
                     `../../uploads/${label}.jpg`
                 ) 
                 const singleRes = await faceapi.detectSingleFace(img)
-                .withFaceLandmarks()
+                .withFaceLandmarks() 
                 .withFaceDescriptor()
                 descriptions.push(singleRes.descriptor)
                 return new faceapi.LabeledFaceDescriptors(label, descriptions)

@@ -2,6 +2,7 @@ import Controller from './Controller.js'
 import RegisterServices from '../Services/RegisterServices.js'
 import EmployessServices from '../Services/EmployessServices.js';
 import NotFound from '../errors/NotFound.js';
+import emailServices from '../utils/emailServices.js';
 
 const registerServices = new RegisterServices();
 const employeServices = new EmployessServices();
@@ -52,7 +53,13 @@ class RegisterController extends Controller {
                 const fullRegister = { employe: {...employe}} ;
                 const createdRegister = await registerServices.created(fullRegister);
                 res.status(200).json(createdRegister); 
+
+                const sendEmail = await emailServices(employe, createdRegister)
+
+                console.log(sendEmail)
             }
+
+            
 
 
         } catch (error) {
