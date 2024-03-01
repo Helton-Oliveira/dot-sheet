@@ -1,4 +1,6 @@
 const cam = document.querySelector('#video');
+const divRegister = document.querySelector("#register");
+
 
 console.log(cam)
 
@@ -44,6 +46,8 @@ async function compareFaces(cam) {
     const result = await response.json();
     const names = result.map((obj) => obj.name)
 
+    console.log(names)
+
     const labeledFaceDescriptors = await labeledTest(names)
     const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, .6);
     console.log(labeledFaceDescriptors)
@@ -62,7 +66,7 @@ async function compareFaces(cam) {
         results.forEach(async(file) => { 
             const res = file.distance 
             console.log(res)
-            res > .4?  await createRegister(file.label) : console.log('erro')
+            res > .6?  await createRegister(file.label) : failRegister(divRegister)
         })
 
     
@@ -70,12 +74,13 @@ async function compareFaces(cam) {
 
 
 function labeledTest (names) {
-    const labels = names
+    const labels = [...names]
+
     return Promise.all(
         labels.map(async label => { 
             const descriptions = []
                 const img = await faceapi.fetchImage(
-                    `../../uploads/${label}.jpg`
+                    `./uploads/${label}.jpg`
                 ) 
                 const singleRes = await faceapi.detectSingleFace(img)
                 .withFaceLandmarks() 
@@ -107,4 +112,19 @@ async function createRegister(register) {
     const res = await response.json()
 
     console.log(res)
+
+    divRegister.classList.remove('done')
+    divRegister.classList.add('done')
+    divRegister.innerHTML = `
+        <h2 class="nameRegister">${register} --- ${res.date}</h2>
+    `
+}
+
+const failRegister = (element) => {
+    element.classList.remove('done')
+    element.classList.add('done')
+    element.style.cssText = 'background-color: #FFB396'
+    element.innerHTML = `
+        <h2 class="nameRegister" style="color: #FF4646"> identification not recognized </h2>
+    `
 }

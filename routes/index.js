@@ -1,14 +1,23 @@
-import  express  from 'express';
-import adminRoutes from './adminRoutes.js'
-import employessRoutes from './employessRoutes.js'
-import registerRoutes from './registersRoutes.js'
+import express from 'express';
+import adminRoutes from './adminRoutes.js';
+import employessRoutes from './employessRoutes.js';
+import registerRoutes from './registersRoutes.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const routes = (app) => {
 
-    const home = app.use('/home', express.static(path.join('index.html','../views/pages')))
+    app.use(express.static(path.join(__dirname, '../views')))
+    app.use((req, res, next) => {
+        res.setHeader('Content-Security-Policy', "script-src 'self'");
+        next();
+    });
+    app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+    
 
     app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
@@ -17,14 +26,11 @@ const routes = (app) => {
         next();
     });
 
-    app.route('/').get((req, res) => {
-        res.status(200).sendFile(home)
-        res.status(200).sendFile(faceApi)
-        res.status(200).sendFile(recognition)
-    })
+    app.get('/', (req, res) => {
+        res.send(path.join(__dirname, '../views', 'index.html'));
+    });
 
     app.use(express.json(), adminRoutes, employessRoutes, registerRoutes);
-}
+};
 
-
-export default routes
+export default routes;
