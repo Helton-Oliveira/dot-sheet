@@ -12,10 +12,6 @@ const __dirname = path.dirname(__filename);
 const routes = (app) => {
 
     app.use(express.static(path.join(__dirname, '../views')))
-    app.use((req, res, next) => {
-        res.setHeader('Content-Security-Policy', "script-src 'self'");
-        next();
-    });
     app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
     
 
