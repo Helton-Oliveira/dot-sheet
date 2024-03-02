@@ -5,10 +5,10 @@ const divRegister = document.querySelector("#register");
 console.log(cam)
 
 Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri('../recognitionModels'),
-    faceapi.nets.faceRecognitionNet.loadFromUri('../recognitionModels'),
-    faceapi.nets.faceLandmark68Net.loadFromUri('../recognitionModels'),
-    faceapi.nets.ssdMobilenetv1.loadFromUri('../recognitionModels')
+    faceapi.nets.tinyFaceDetector.loadFromUri('./recognitionModels'),
+    faceapi.nets.faceRecognitionNet.loadFromUri('./recognitionModels'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('./recognitionModels'),
+    faceapi.nets.ssdMobilenetv1.loadFromUri('./recognitionModels')
 ]).then(start);
 
 async function start() {
