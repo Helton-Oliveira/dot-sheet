@@ -11,8 +11,8 @@ const employessController = new EmployessController;
 router.get('/employe',  employessController.getAllRegister);
 router.get('/employe/:id', verifyToken, employessController.getOneRegister);
 router.post('/employe', verifyToken, upload.single('file'), employessController.completeEmployeeRegistration);
-router.put('/employe/:name', verifyToken, employessController.toUpdated);
-router.delete('/employe/:name', verifyToken, employessController.deleted);
+router.put('/employe/:id', verifyToken, employessController.toUpdated);
+router.delete('/employe/:id', verifyToken, employessController.deleted);
 
 
 export default router;

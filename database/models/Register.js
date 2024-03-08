@@ -20,7 +20,6 @@ const RegisterSchema = new Schema({
 
    employe: {
       type: EmployeSchema,
-      // required: true
    }
      
 }, { versionKey: false })

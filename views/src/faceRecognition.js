@@ -41,15 +41,16 @@ async function compareFaces(cam) {
         }
     }
 
-    const response = await fetch('http://localhost:8080/employe', options);
+    const response = await fetch('https://dot-sheet.onrender.com/employe', options);
 
     const result = await response.json();
     const names = result.map((obj) => obj.name)
 
     console.log(names)
 
-    const labeledFaceDescriptors = await labeledTest(names)
-    const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, .6);
+    const labeledFaceDescriptors = await labeledTest(names, 'https://dot-sheet.onrender.com')
+    
+    const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, .4);
     console.log(labeledFaceDescriptors)
 
     const faceCam = await faceapi
@@ -73,23 +74,26 @@ async function compareFaces(cam) {
 }
 
 
-function labeledTest (names) {
-    const labels = [...names]
+async function labeledTest(names, baseUrl) {
+    const labels = [...names];
 
     return Promise.all(
         labels.map(async label => { 
             const descriptions = []
-                const img = await faceapi.fetchImage(
-                    `./uploads/${label}.jpg`
-                ) 
-                const singleRes = await faceapi.detectSingleFace(img)
+            const img = await faceapi.fetchImage(
+                `${baseUrl}/uploads/${label}.jpg`
+            ); 
+
+            const singleRes = await faceapi.detectSingleFace(img)
                 .withFaceLandmarks() 
-                .withFaceDescriptor()
-                descriptions.push(singleRes.descriptor)
-                return new faceapi.LabeledFaceDescriptors(label, descriptions)
+                .withFaceDescriptor();
+
+            descriptions.push(singleRes.descriptor);
+            return new faceapi.LabeledFaceDescriptors(label, descriptions);
         })
-    )
+    );
 }
+
 
 async function createRegister(register) {
 
@@ -107,7 +111,7 @@ async function createRegister(register) {
         body: JSON.stringify(regist)
     }
 
-    const response = await fetch('http://localhost:8080/register/rec', options);
+    const response = await fetch('https://dot-sheet.onrender.com/register/rec', options);
 
     const res = await response.json()
 

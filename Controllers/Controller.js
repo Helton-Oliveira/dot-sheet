@@ -72,7 +72,6 @@ class Controller {
             } else {
                 next(new NotFound());
             }
-            
         } catch (error) {
             next(error);
         }

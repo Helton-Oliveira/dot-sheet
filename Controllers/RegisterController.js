@@ -23,7 +23,7 @@ class RegisterController extends Controller {
                 res.status(200).json(createdRegister); 
             } 
         } catch (error) {
-            next(new NotFound('User not found, please enter a valid user').sendReply(res))
+            next(new NotFound('User not found, please enter a valid user'))
         }
     }
 
