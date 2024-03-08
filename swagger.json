@@ -1,0 +1,811 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "Sistema para controle de cartão ponto digital.",
+      "description": "Esse sistema tem como objetivo auxiliar o controle de cartão ponto eletronico de funcionários, e permitir que os mesmos tenham acesso a descrição para controle de horários.",
+      "contact": {
+        "email": "heltonhenriqueoliveira@gmail.com"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://dot-sheet.onrender.com/",
+        "description": "API de deploy"
+      }
+    ],
+    "paths": {
+      "/admin": {
+        "post": {
+          "sumary": "Cadastro de Admin",
+          "description": "Rota responsável por cadastrar novos Admin's",
+          "tags": ["Admin"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Admin"
+                },
+                "examples": {
+                  "admin": {
+                    "value": {
+                      "name": "Steve Rogers",
+                      "cpf": "111555966-81",
+                      "email": "rogers@avengers.com",
+                      "password": "avenderNumberOne",
+                      "tel": "(11) 9852-2563",
+                      "occupation": "CEO in Avengers Office",
+                      "active": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "400": {
+              "description": "One or more data provided is incorrect"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "summary": "Obter todos os registros do Admin",
+          "description": "Rota responsável por obter todos os registros do Admin",
+          "tags": ["Admin"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Admin"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/admin/{id}": {
+        "get": {
+          "summary": "Obter um registro do Admin por ID",
+          "description": "Rota responsável por obter um registro do Admin por ID",
+          "tags": ["Admin"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Admin",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualizar um registro do Admin por ID",
+          "description": "Rota responsável por atualizar um registro do Admin por ID",
+          "tags": ["Admin"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Admin",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Admin"
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Excluir um registro do Admin por ID",
+          "description": "Rota responsável por excluir um registro do Admin por ID",
+          "tags": ["Admin"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Admin",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Admin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/auth/admin": {
+        "post": {
+          "description": "Criar token de autenticação",
+          "summary": "Criando token de autenticação",
+          "tags": ["Admin"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "admin": {
+                    "value": {
+                      "name": "Steve Rogers",
+                      "email": "rogers@avengers.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "400": {
+              "description": "One or more data provided is incorrect"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "description": "Token de autenticação"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/employe": {
+        "get": {
+          "summary": "Obter todos os registros do Employee",
+          "description": "Rota responsável por obter todos os registros do Employee",
+          "tags": ["Employee"],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Employee"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Cadastrar um novo Employee",
+          "description": "Rota responsável por cadastrar um novo Employee",
+          "tags": ["Employee"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "example1": {
+                    "value": {
+                      "body": {
+                        "name": "John Doe",
+                        "cpf": "12345678901",
+                        "email": "john.doe@example.com",
+                        "tel": "123456789",
+                        "occupation": "Developer",
+                        "active": true
+                      },
+                      "file": "<base64-encoded-file-content>"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/employe/{id}": {
+        "get": {
+          "summary": "Obter um registro do Employee por ID",
+          "description": "Rota responsável por obter um registro do Employee por ID",
+          "tags": ["Employee"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Employee",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualizar um registro do Employee por ID",
+          "description": "Rota responsável por atualizar um registro do Employee por ID",
+          "tags": ["Employee"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Employee",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Excluir um registro do Employee por ID",
+          "description": "Rota responsável por excluir um registro do Employee por ID",
+          "tags": ["Employee"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Employee",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    "/register": {
+        "get": {
+          "summary": "Obter todos os registros",
+          "description": "Rota responsável por obter todos os registros",
+          "tags": ["Register"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Register"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Criar um novo registro",
+          "description": "Rota responsável por criar um novo registro",
+          "tags": ["Register"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Register"
+                }
+              }
+            }
+          },
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Register"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },    
+      "/register/q": {
+        "get": {
+          "summary": "Filtrar registros por Query String",
+          "description": "Rota responsável por filtrar registros",
+          "tags": ["Register"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Register"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/register/{id}": {
+        "get": {
+          "summary": "Obter um registro por ID",
+          "description": "Rota responsável por obter um registro por ID",
+          "tags": ["Register"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Register",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Register"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualizar um registro de Register por ID",
+          "description": "Rota responsável por atualizar um registro de Register por ID",
+          "tags": ["Register"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Register",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Register"
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Register"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Excluir um registro de Register por ID",
+          "description": "Rota responsável por excluir um registro de Register por ID",
+          "tags": ["Register"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Register",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "500": {
+              "description": "Internal Server Error"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Register"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Admin": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "cpf": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "tel": {
+              "type": "string"
+            },
+            "occupation": {
+              "type": "string"
+            },
+            "active": {
+              "type": "boolean"
+            }
+          }
+        },
+        "Employee": {
+            "type": "object",
+            "properties": {
+                "name": { 
+                    "type": "string"
+                },
+                "cpf": {
+                    "type": "string"
+                }, 
+                "email": {
+                    "type": "string"
+                },
+                "imgSrc": {
+                    "type": "string"
+                },
+                "tel": {
+                    "type": "string"
+                },
+                "occupation": {
+                    "type": "string"
+                },
+                "active": {
+                    "type": "boolean"
+                }
+        }
+        },
+        "Register": {
+            "type": "object",
+            "properties": {
+                "employe": {
+                    "type": "string"
+                }
+            }
+        }
+      },
+      "securitySchemas": {
+        "bearerAuth": {
+          "type": "http",
+          "schema": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+}
+
+  
