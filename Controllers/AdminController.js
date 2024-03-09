@@ -14,7 +14,9 @@ class AdminController extends Controller {
             
             const encrypt = await adminServices.encryptPassword(req.body)      
             res.status(200).json(encrypt)    
+        
         } catch (error) {
+
             next(error)
         }
     }

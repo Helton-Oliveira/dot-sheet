@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 function errorHandler(err, req, res, next) {
     console.log(err);
 
-    if(err instanceof mongoose.Error.CastError) {
+    if(err instanceof mongoose.Error.CastError) { 
 
         new IncorrectRequest().sendReply(res);
 
@@ -19,9 +19,10 @@ function errorHandler(err, req, res, next) {
         err.sendReply(res);
         
     } else {
-
         new BaseError().sendReply(res)
     }
+
+    next()
 }
 
 export default errorHandler;

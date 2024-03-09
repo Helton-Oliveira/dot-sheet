@@ -18,9 +18,10 @@ const app = express();
 
 routes(app);
 
+app.use(errorHandler);
+
 app.use(handler404);
 
-app.use(errorHandler);
 
  
 

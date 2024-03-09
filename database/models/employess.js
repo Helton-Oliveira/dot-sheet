@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
+import { cpfValidation } from "../../utils/cpfValidation.js";
 
 const EmployeSchema = new Schema({
 
@@ -8,31 +9,36 @@ const EmployeSchema = new Schema({
     } ,
     name: { 
         type: String,
-        require: [true, 'O campo name deve ser obrigatório' ],
+        minLength: [3, 'The {PATH} must contain at least 3 characters'] , 
+        required: '{PATH} is required',
         indexedDB: true
     },
     cpf: {
         type: String,
-        require: [true, 'O campo CPF deve ser obrigatório']
+        required: '{PATH} is required',
+        validate: {
+            validator: (value) => { if (!cpfValidation(value)) throw new Error('{PATH} not valid') }
+        } 
     }, 
     email: {
         type: String,
-        require: [true, 'O campo email é obrigatório']
+        required: '{PATH} is required',
     },
     imgSrc: {
         type: String,
+        equired: '{PATH} is required',
     },
     tel: {
         type: String,
-        require: [true, 'O campo tel é obrigatório']
+        required: '{PATH} is required',
     },
     occupation: {
         type: String,
-        require: [true, 'O campo occupation é obrigatório']
+        required: '{PATH} is required',
     },
     active: {
         type: Boolean,
-        require: [true, 'O campo active é obrigatório.']
+        required: '{PATH} is required',
     },
 }, { versionKey: false })
 
